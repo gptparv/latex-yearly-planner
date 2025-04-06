@@ -8,7 +8,7 @@ else
 fi
 
 if [ -z "$CONFIG_FILES" ]; then
-  CONFIG_FILES='cfg/base.yaml,cfg/template_months_on_side.yaml,cfg/sn_a5x.mos.default.yaml,cfg/sn_a5x.mos.default.dailycal.yaml'
+  CONFIG_FILES="cfg/base.yaml,cfg/rm2.base.yaml,cfg/template_months_on_side.yaml,cfg/rm2.mos.default.yaml,cfg/rm2.mos.default.dailycal.yaml"
 fi
 
 NAME="planner.${TARGET_YEAR}"
@@ -18,7 +18,7 @@ printf "📅 Building $(pwd)/${NAME}.pdf - "
 PLANNER_YEAR=${TARGET_YEAR} PASSES=2 CFG=${CONFIG_FILES} NAME=${NAME} ./single.sh >/tmp/$NAME.log &
 BUILDER_PID=$!
 
-tail --pid=$BUILDER_PID -f /tmp/$NAME.log | python3 parser.py &
+gtail --pid=$BUILDER_PID -f /tmp/$NAME.log | python3 parser.py &
 OUTPUT_PID=$!
 
 
